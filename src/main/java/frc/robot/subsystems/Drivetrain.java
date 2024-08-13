@@ -1,6 +1,9 @@
 package frc.robot.subsystems;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
@@ -10,6 +13,11 @@ import frc.robot.shuffleboard.ShuffleboardUI;
 
 /** Represents a swerve drive style drivetrain. */
 public class Drivetrain extends KillableSubsystem {
+
+        // Creates differential kinematics
+        private final DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(
+                Constants.Frame.ROBOT_WHEEL_DISTANCE_WIDTH
+        );
 
         // Init drivetrain
         public Drivetrain() {
@@ -32,17 +40,17 @@ public class Drivetrain extends KillableSubsystem {
                 double ySpeed = driveCommandData.ySpeed;
                 double rot = driveCommandData.rot;
 
-                // Calculates swerveModuleStates given optimal ChassisSpeeds given by control
+                // Calculates wheelSpeeds given optimal ChassisSpeeds given by control
                 // scheme
 
-                SwerveModuleState[] swerveModuleStates = m_kinematics.toSwerveModuleStates(
+                DifferentialDriveWheelSpeeds wheelSpeeds = m_kinematics.toWheelSpeeds(
                                 fieldRelative
                                                 ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot,
-                                                                poseFilter.getEstimatedPosition().getRotation())
+                                                                new Rotation2d(0))
                                                 : new ChassisSpeeds(xSpeed, ySpeed, rot));
 
                 // Desaturates wheel speeds
-                SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, Constants.Swerve.robotMaxSpeed);
+                wheelSpeeds.desaturate(Constants.Differential.robotMaxSpeed);
 
                 // Sets state for each module
                 m_frontLeft.setDesiredState(swerveModuleStates[0]);

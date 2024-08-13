@@ -3,16 +3,11 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
-import frc.robot.utils.DriverStationUtils;
 import frc.robot.utils.ModuleConstants;
-import frc.robot.utils.SimpleMath;
 import frc.robot.utils.ModuleConstants.MotorLocation;
 import frc.robot.utils.ModuleConstants.MotorType;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -30,148 +25,6 @@ import edu.wpi.first.math.geometry.Translation3d;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-
-    public final class Shooter {
-        public static final double SPEAKER_SPEED = 1;
-        public static final double AMP_SPEED = 0.25;
-        public static final double REVERSE_SPEED = -0.1;
-    }
-
-    public final class Channel {
-        public static final double SHOOT_SPEED = 1;
-        public static final double THROUGH_SPEED = 1;
-        public static final double REVERSE_SPEED = -1;
-    }
-
-    public final class Acquisition {
-        /** Constant; The speed and direction of the acquisition on intake */
-        public static final double ACQUISITION_SPEED = 1;
-    }
-
-    public enum FieldPosition{
-        Speaker(Constants.FieldConstants.TEAM_RED_SPEAKER, Constants.FieldConstants.TEAM_BLUE_SPEAKER),
-        Amp(Constants.FieldConstants.TEAM_RED_AMP, Constants.FieldConstants.TEAM_BLUE_AMP),
-        CenterChain(SimpleMath.MirrorLocation(Constants.FieldConstants.TEAM_BLUE_CENTER_CHAIN), Constants.FieldConstants.TEAM_BLUE_CENTER_CHAIN),
-        // SpeakerSideChain(SimpleMath.MirrorLocation(Constants.FieldConstants.TEAM_BLUE_SPEAKER_SIDE_CHAIN), Constants.FieldConstants.TEAM_BLUE_SPEAKER_SIDE_CHAIN),
-        // AmpSideChain(SimpleMath.MirrorLocation(Constants.FieldConstants.TEAM_BLUE_AMP_SIDE_CHAIN), Constants.FieldConstants.TEAM_BLUE_AMP_SIDE_CHAIN),
-        // FarSideChain(SimpleMath.MirrorLocation(Constants.FieldConstants.TEAM_BLUE_FAR_SIDE_CHAIN), Constants.FieldConstants.TEAM_BLUE_FAR_SIDE_CHAIN)
-        ;
-    
-        private Translation2d red;
-        private Translation2d blue;
-    
-        private FieldPosition(Translation2d red, Translation2d blue){
-            this.red=red;        
-            this.blue=blue;
-        }
-    
-        public Translation2d getPose(){
-            if(DriverStationUtils.getCurrentAlliance() == Alliance.Red)
-                return red;
-            else 
-                return blue;
-        }
-    }
-
-    public enum FieldStartingLocation {
-        FrontSpeaker(
-                // Red
-                new Pose2d(14.169, 5.584, Rotation2d.fromDegrees(180)),
-                // Blue
-                new Pose2d(2.371, 5.584, Rotation2d.fromDegrees(0))),
-        FrontSpeakerClose(
-                // Red
-                new Pose2d(14.169, 5.584, Rotation2d.fromDegrees(180)),
-                // Blue
-                new Pose2d(2.371, 5.584, Rotation2d.fromDegrees(0))),
-        AtAmp(
-                // Red
-                new Pose2d(14.89, 7.27, Rotation2d.fromDegrees(-90)),
-                // Blue
-                new Pose2d(1.65, 7.27, Rotation2d.fromDegrees(-90))),
-        DiagonalSpeaker(
-                // Red
-                new Pose2d(16.268, 4.454, Rotation2d.fromDegrees(-120.665)),
-                // Blue
-                new Pose2d(1.564, 4.403, Rotation2d.fromDegrees(-60.849))),
-        DiaAmpSpeaker(
-                // Red
-                new Pose2d(16.199, 6.730, Rotation2d.fromDegrees(119.8)),
-                // Blue
-                new Pose2d(1.776, 6.703, Rotation2d.fromDegrees(58.762))),
-
-        SourceStart(
-            // Red
-            new Pose2d(15.15, 4.22, Rotation2d.fromDegrees(180)),
-            // Blue
-            new Pose2d(1.39, 4.22, Rotation2d.fromDegrees(0))
-        ),
-        AmpStart(
-            // Red
-            new Pose2d(15.15, 6.85, Rotation2d.fromDegrees(180)),
-            // Blue
-            new Pose2d(1.39, 6.85, Rotation2d.fromDegrees(0))
-        )
-                ;
-
-        private final Pose2d m_transformRed;
-        private final Pose2d m_transformBlue;
-
-        private FieldStartingLocation(Pose2d poseRed, Pose2d poseBlue) {
-            m_transformRed = poseRed;
-            m_transformBlue = poseBlue;
-        }
-
-        public Pose2d getPose() {
-            return DriverStationUtils.getCurrentAlliance() == Alliance.Red ? m_transformRed : m_transformBlue;
-        }
-    }
-
-    // Auto routines
-    public enum AutoName{
-        // Center Note Routines
-        _2NoteSpeaker("2NoteSpeaker"),
-        _3NoteAmpSide("3NoteAmpSide"),
-        _3NoteSpeakerSide("3NoteSpeakerSide"),
-        _4NoteSpeaker("4NoteSpeaker"),
-        UnderStage3Note("UnderStage3Note"),
-        _4NoteBlitz("4NoteBlitz"),
-        // Amp Side Routines
-        AmpSideDiag1("AmpSideDiag1"),
-        AmpSideDiagTaxi("AmpSideDiagTaxi"),
-        AmpSideInner2Note("AmpSideInner2Note"),
-        DiagJustShoot("DiagJustShoot"),
-        // Speaker Side Routines
-        SourceSide1Note("SourceSide1Note"),
-        SourceSide2Note("SourceSide2Note"),
-        SourceSide3Note("SourceSide3Note"),
-        SourceSideInner2Note("SourceSideInner2Note"),
-        FarSpeaker2Note("FarSpeaker2Note"),
-        FarSpeaker("FarSpeaker"),
-        SourceSideScramble("SourceSideScramble")
-        ;
-    
-        public final String pathref;
-    
-        AutoName(String pathplannerRef){
-            pathref=pathplannerRef;
-        }
-    }
-
-    public final class FieldConstants {
-
-        public static final Translation2d TEAM_RED_SPEAKER = new Translation2d(16, 5.5);
-        public static final Translation2d TEAM_BLUE_SPEAKER = new Translation2d(0.6, 5.6);
-        public static final Translation2d TEAM_RED_AMP = new Translation2d(14.7, 8.5);
-        public static final Translation2d TEAM_BLUE_AMP = new Translation2d(2.775, 8.5);
-
-        public static final Translation2d TEAM_BLUE_CENTER_CHAIN = new Translation2d(4.89, 4.09);
-
-        // Field width and length
-        public static final double FIELD_X_DIMENSION = 16.54; // Length
-        public static final double FIELD_Y_DIMENSION = 8.21; // Width
-    }
-
     public final class Control {
 
         // Sensitivity for speed meter
@@ -216,7 +69,7 @@ public final class Constants {
         public static final double ROBOT_WHEEL_DISTANCE_LENGTH = 0.46;
     }
 
-    public final class Swerve {
+    public final class Differential {
 
         // Works out module locations
         private static final double locX = Frame.ROBOT_WHEEL_DISTANCE_WIDTH / 2;
