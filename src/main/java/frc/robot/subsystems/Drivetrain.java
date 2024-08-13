@@ -7,46 +7,13 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.utils.DriveCommandData;
 import frc.robot.Constants;
 import frc.robot.shuffleboard.ShuffleboardUI;
-import frc.robot.utils.UncertainSwerveDrivePoseEstimator;
 
 /** Represents a swerve drive style drivetrain. */
 public class Drivetrain extends KillableSubsystem {
 
-        // Creates Nav object
-        private final NavSensor _nav = new NavSensor();
-
-        // Creates swerve module objects
-        private final SwerveModule m_frontLeft = new SwerveModule(Constants.Swerve.frontLeftConstants);
-        private final SwerveModule m_frontRight = new SwerveModule(Constants.Swerve.frontRightConstants);
-        private final SwerveModule m_backLeft = new SwerveModule(Constants.Swerve.backLeftConstants);
-        private final SwerveModule m_backRight = new SwerveModule(Constants.Swerve.backRightConstants);
-
-        // Creates swerve kinematics
-        private final SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
-                        Constants.Swerve.frontLeftConstants.wheelLocation,
-                        Constants.Swerve.frontRightConstants.wheelLocation,
-                        Constants.Swerve.backLeftConstants.wheelLocation,
-                        Constants.Swerve.backRightConstants.wheelLocation);
-
-        // Creates swerve post estimation filter
-        public static UncertainSwerveDrivePoseEstimator poseFilter;
-
         // Init drivetrain
         public Drivetrain() {
-                _nav.resetAngleAdjustment();
-
-                poseFilter = new UncertainSwerveDrivePoseEstimator(
-                                m_kinematics,
-                                _nav.getAdjustedAngle(),
-                                new SwerveModulePosition[] {
-                                                m_frontLeft.getModulePosition(),
-                                                m_frontRight.getModulePosition(),
-                                                m_backLeft.getModulePosition(),
-                                                m_backRight.getModulePosition()
-                                },
-                                ShuffleboardUI.Autonomous.getStartingLocation().getPose());
-
-                //ShuffleboardUI.Overview.setPoseCertain(poseFilter::isCertain);
+                
         }
 
         /**
@@ -130,7 +97,6 @@ public class Drivetrain extends KillableSubsystem {
          * Resets the pose to FrontSpeakerClose (shooter facing towards speaker)
          */
         public void resetDriverPose() {
-                _nav.resetAngleAdjustment();
                 m_frontLeft.resetDriveMotorPosition();
                 m_frontRight.resetDriveMotorPosition();
                 m_backLeft.resetDriveMotorPosition();
@@ -156,19 +122,5 @@ public class Drivetrain extends KillableSubsystem {
                                 m_frontRight.getModuleState(),
                                 m_backLeft.getModuleState(),
                                 m_backRight.getModuleState());
-        }
-
-        /**
-         * Similar to resetPose but adds an argument for the initial pose
-         */
-        public void setToPose(Pose2d pose) {
-                poseFilter.resetPosition(_nav.getAdjustedAngle(),
-                                new SwerveModulePosition[] {
-                                                m_frontLeft.getModulePosition(),
-                                                m_frontRight.getModulePosition(),
-                                                m_backLeft.getModulePosition(),
-                                                m_backRight.getModulePosition()
-                                }, pose);
-                poseFilter.setCertainty(true); // we just set a known position
         }
 }
