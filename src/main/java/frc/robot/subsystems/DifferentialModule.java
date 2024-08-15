@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.hardware.TalonFX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
@@ -12,7 +13,7 @@ import frc.robot.utils.ModuleConstants;
 public class DifferentialModule {
 
   // Creates variables for motors and absolute encoders
-  private final TalonFX m_driveMotor;
+  private final CANSparkMax m_driveMotor;
 
   private final ProfiledPIDController drivePIDController;
   private final SimpleMotorFeedforward driveFeedForward;
@@ -30,7 +31,7 @@ public class DifferentialModule {
    */
   public DifferentialModule(ModuleConstants m) {
     // Creates TalonFX objects
-    m_driveMotor = new TalonFX(m.driveMotorChannel);
+    m_driveMotor = new CANSparkMax (m.driveMotorChannel, MotorType.kBrushless);
 
     // Creates other variables
     this.DRIVE_GEAR_RATIO = m.DRIVE_GEAR_RATIO;
@@ -65,7 +66,7 @@ public class DifferentialModule {
    * @return The current velocity of the drive motor (meters per second)
    */
   private double getDriveWheelVelocity() {
-    double driveMotorRotationsPerSecond = m_driveMotor.getVelocity().getValueAsDouble();
+    double driveMotorRotationsPerSecond = m_driveMotor.getEncoder().getVelocity() / 60.0; // RPM to RPS
     double driveWheelMetersPerSecond = (driveMotorRotationsPerSecond / DRIVE_GEAR_RATIO)
         * (WHEEL_DIAMETER * Math.PI);
     return driveWheelMetersPerSecond;
@@ -82,7 +83,7 @@ public class DifferentialModule {
 
   /** resets drive motor position */
   public void resetDriveMotorPosition() {
-    m_driveMotor.setPosition(0);
+    m_driveMotor.getEncoder().setPosition(0);
   }
 
   /**
