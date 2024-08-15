@@ -14,6 +14,7 @@ public class DifferentialModule {
 
   // Creates variables for motors and absolute encoders
   private final CANSparkMax m_driveMotor;
+  private final CANSparkMax m_driveMotorFollower;
 
   private final ProfiledPIDController drivePIDController;
   private final SimpleMotorFeedforward driveFeedForward;
@@ -32,6 +33,8 @@ public class DifferentialModule {
   public DifferentialModule(ModuleConstants m) {
     // Creates TalonFX objects
     m_driveMotor = new CANSparkMax (m.driveMotorChannel, MotorType.kBrushless);
+    m_driveMotorFollower = new CANSparkMax (m.driveMotorFollowerChannel, MotorType.kBrushless);
+    m_driveMotorFollower.follow(m_driveMotor);
 
     // Creates other variables
     this.DRIVE_GEAR_RATIO = m.DRIVE_GEAR_RATIO;

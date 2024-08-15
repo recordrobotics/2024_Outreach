@@ -21,6 +21,7 @@ public class ModuleConstants {
     }
 
     public int driveMotorChannel;
+    public int driveMotorFollowerChannel;
 
     public double DRIVE_GEAR_RATIO;
 
@@ -59,10 +60,12 @@ public class ModuleConstants {
 
     public ModuleConstants(
             int driveMotorChannel,
+            int driveMotorFollowerChannel,
             MotorType driveMotorType) {
 
         // Encoder nums
         this.driveMotorChannel = driveMotorChannel;
+        this.driveMotorFollowerChannel = driveMotorFollowerChannel;
 
         // Max Angular Acceleration & Velocity
         this.DriveMaxAngularVelocity = Constants.Differential.DriveMaxAngularVelocity;
@@ -165,7 +168,11 @@ public class ModuleConstants {
         if (driveMotorChannel == null)
             return getDefault(location);
 
-        return new ModuleConstants(Math.toIntExact(driveMotorChannel), driveMotorType);
+        Long driveMotorFollowerChannel = (Long) motor.get("driveMotorFollowerChannel");
+        if (driveMotorFollowerChannel == null)
+            return getDefault(location);
+
+        return new ModuleConstants(Math.toIntExact(driveMotorChannel), Math.toIntExact(driveMotorFollowerChannel), driveMotorType);
     }
 
 }

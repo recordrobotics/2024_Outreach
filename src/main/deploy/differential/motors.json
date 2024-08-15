@@ -1,8 +1,10 @@
 {
     "left": {
-        "driveMotorChannel": 2
+        "driveMotorChannel": 2,
+        "driveMotorFollowerChannel": 1
     },
     "right": {
-        "driveMotorChannel": 4
+        "driveMotorChannel": 4,
+        "driveMotorFollowerChannel": 3
     }
 }

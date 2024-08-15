@@ -132,9 +132,11 @@ public final class Constants {
         // #region BACKUP
         public static final ModuleConstants BACKUP_leftConstants = new ModuleConstants(
                 2,
+                1,
                 MotorType.Kraken);
         public static final ModuleConstants BACKUP_rightConstants = new ModuleConstants(
                 4,
+                3,
                 MotorType.Kraken);
 
         // #endregion
