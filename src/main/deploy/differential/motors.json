@@ -1,0 +1,8 @@
+{
+    "left": {
+        "driveMotorChannel": 2
+    },
+    "right": {
+        "driveMotorChannel": 4
+    }
+}

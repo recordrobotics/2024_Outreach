@@ -3,14 +3,11 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot;
+
 import frc.robot.utils.ModuleConstants;
 import frc.robot.utils.ModuleConstants.MotorLocation;
 import frc.robot.utils.ModuleConstants.MotorType;
-import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
-import edu.wpi.first.math.geometry.Rotation3d;
-import edu.wpi.first.math.geometry.Transform3d;
-import edu.wpi.first.math.geometry.Translation3d;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -76,18 +73,13 @@ public final class Constants {
         private static final double locY = Frame.ROBOT_WHEEL_DISTANCE_LENGTH / 2;
         public static final double locDist = Math.sqrt(locX * locX + locY * locY);
 
-        private static final Translation2d frontLeftLocation = new Translation2d(locX, locY);
-        private static final Translation2d frontRightLocation = new Translation2d(locX, -locY);
-        private static final Translation2d backLeftLocation = new Translation2d(-locX, locY);
-        private static final Translation2d backRightLocation = new Translation2d(-locX, -locY);
-
         // Gear ratios for falcon and kraken
         public static final double FALCON_TURN_GEAR_RATIO = 15.43; // (https://web.archive.org/web/20230117081053/https://docs.wcproducts.com/wcp-swervex/general-info/ratio-options)
         public static final double FALCON_DRIVE_GEAR_RATIO = 7.36; // (https://web.archive.org/web/20230117081053/https://docs.wcproducts.com/wcp-swervex/general-info/ratio-options)
 
         public static final double KRAKEN_TURN_GEAR_RATIO = 13.3714;
         public static final double KRAKEN_DRIVE_GEAR_RATIO = 6.75; // X1 12 pinion
-        
+
         // PID Values
         public static final double FALCON_TURN_KP = 1;
         public static final double FALCON_TURN_KI = 0;
@@ -134,84 +126,25 @@ public final class Constants {
         /**
          * ===================== NOTE !!!!!! ========================
          * THESE ARE BACKUP CONSTANTS - NOT USED IF EVERYTHING WORKS
-         * EDIT deploy/swerve/motors.json instead
+         * EDIT deploy/differential/motors.json instead
          */
 
-        //#region BACKUP
-        public static final ModuleConstants BACKUP_frontLeftConstants = new ModuleConstants(
+        // #region BACKUP
+        public static final ModuleConstants BACKUP_leftConstants = new ModuleConstants(
                 2,
-                1,
-                1,
-                0.633,
-                frontLeftLocation,
-                MotorType.Kraken,
                 MotorType.Kraken);
-        public static final ModuleConstants BACKUP_frontRightConstants = new ModuleConstants(
+        public static final ModuleConstants BACKUP_rightConstants = new ModuleConstants(
                 4,
-                3,
-                2,
-                0.848,
-                frontRightLocation,
-                MotorType.Kraken,
                 MotorType.Kraken);
-        public static final ModuleConstants BACKUP_backLeftConstants = new ModuleConstants(
-                8,
-                7,
-                4,
-                0.857,
-                backLeftLocation,
-                MotorType.Kraken,
+
+        // #endregion
+
+        public static final ModuleConstants leftConstants = ModuleConstants.fromConfig(
+                MotorLocation.Left,
                 MotorType.Kraken);
-        public static final ModuleConstants BACKUP_backRightConstants = new ModuleConstants(
-                6,
-                5,
-                3,
-                0.554,
-                backRightLocation,
-                MotorType.Kraken,
+
+        public static final ModuleConstants rightConstants = ModuleConstants.fromConfig(
+                MotorLocation.Right,
                 MotorType.Kraken);
-        //#endregion
-
-        public static final ModuleConstants frontLeftConstants = ModuleConstants.fromConfig(
-            MotorLocation.FrontLeft,
-            MotorType.Kraken
-        );
-
-        public static final ModuleConstants frontRightConstants = ModuleConstants.fromConfig(
-            MotorLocation.FrontRight,
-            MotorType.Kraken
-        );
-
-        public static final ModuleConstants backLeftConstants = ModuleConstants.fromConfig(
-            MotorLocation.BackLeft,
-            MotorType.Kraken
-        );
-
-        public static final ModuleConstants backRightConstants = ModuleConstants.fromConfig(
-            MotorLocation.BackRight,
-            MotorType.Kraken
-        );
-    }
-
-    public final class Vision {
-
-        public static final String cameraID = new String("photonvision");
-
-        //The offset from the center of the robot to the camera, and from facing exactly forward to the orientation of the camera.
-	    public static final Transform3d robotToCam = new Transform3d(
-            new Translation3d(Units.inchesToMeters(11), -1*Units.inchesToMeters(9), 0.1725), 
-            new Rotation3d(0,0,0)
-        );
-
-        public static final Transform3d[] tagTransforms = {//april tags 1-8 in order. values contained are x, y, z, theta, in that order. x, y, z are distances in meters, theta is in radians.
-            new Transform3d(new Translation3d(15.513558, 1.071626, 0.462788), new Rotation3d(0,0,Math.PI)),
-            new Transform3d(new Translation3d(15.513558, 2.748026, 0.462788), new Rotation3d(0,0,Math.PI)),
-            new Transform3d(new Translation3d(15.513558, 4.424426, 0.462788), new Rotation3d(0,0,Math.PI)),
-            new Transform3d(new Translation3d(16.178784, 6.749796, 0.695452), new Rotation3d(0,0,Math.PI)),
-            new Transform3d(new Translation3d(0.36195, 6.749796, 0.695452), new Rotation3d(0,0,0)),
-            new Transform3d(new Translation3d(1.8415, 8.2042, 1.355852), new Rotation3d(0,0,4.71239)),
-            new Transform3d(new Translation3d(1.02743, 2.748026, 0.462788), new Rotation3d(0,0,0)),
-            new Transform3d(new Translation3d(1.02743, 1.071626, 0.462788), new Rotation3d(0,0,0))
-        };
     }
 }

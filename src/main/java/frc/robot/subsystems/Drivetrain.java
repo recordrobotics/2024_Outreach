@@ -1,27 +1,26 @@
 package frc.robot.subsystems;
-import edu.wpi.first.math.geometry.Pose2d;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveModulePosition;
-import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.utils.DriveCommandData;
 import frc.robot.Constants;
-import frc.robot.shuffleboard.ShuffleboardUI;
 
 /** Represents a swerve drive style drivetrain. */
 public class Drivetrain extends KillableSubsystem {
 
         // Creates differential kinematics
         private final DifferentialDriveKinematics m_kinematics = new DifferentialDriveKinematics(
-                Constants.Frame.ROBOT_WHEEL_DISTANCE_WIDTH
-        );
+                        Constants.Frame.ROBOT_WHEEL_DISTANCE_WIDTH);
+
+        // Create module objects
+        private final DifferentialModule m_left = new DifferentialModule(Constants.Differential.leftConstants);
+        private final DifferentialModule m_right = new DifferentialModule(Constants.Differential.rightConstants);
 
         // Init drivetrain
         public Drivetrain() {
-                
+
         }
 
         /**
@@ -53,72 +52,34 @@ public class Drivetrain extends KillableSubsystem {
                 wheelSpeeds.desaturate(Constants.Differential.robotMaxSpeed);
 
                 // Sets state for each module
-                m_frontLeft.setDesiredState(swerveModuleStates[0]);
-                m_frontRight.setDesiredState(swerveModuleStates[1]);
-                m_backLeft.setDesiredState(swerveModuleStates[2]);
-                m_backRight.setDesiredState(swerveModuleStates[3]);
+                m_left.setDesiredState(wheelSpeeds.leftMetersPerSecond);
+                m_right.setDesiredState(wheelSpeeds.rightMetersPerSecond);
         }
 
         // set PID target to 0 but also immediately stop all modules
         @Override
         public void kill() {
                 drive(new DriveCommandData(0, 0, 0, false));
-                m_frontLeft.stop();
-                m_frontRight.stop();
-                m_backLeft.stop();
-                m_backRight.stop();
+                m_left.stop();
+                m_right.stop();
         }
 
         @Override
         public void periodic() {
-                poseFilter.update(
-                                _nav.getAdjustedAngle(),
-                                new SwerveModulePosition[] {
-                                                m_frontLeft.getModulePosition(),
-                                                m_frontRight.getModulePosition(),
-                                                m_backLeft.getModulePosition(),
-                                                m_backRight.getModulePosition()
-                                });
-                ShuffleboardUI.Autonomous.setRobotPose(poseFilter.getEstimatedPosition());
         }
 
         /** Resets the field relative position of the robot (mostly for testing). */
         public void resetStartingPose() {
-                _nav.resetAngleAdjustment();
-                m_frontLeft.resetDriveMotorPosition();
-                m_frontRight.resetDriveMotorPosition();
-                m_backLeft.resetDriveMotorPosition();
-                m_backRight.resetDriveMotorPosition();
-                poseFilter.resetPosition(
-                                _nav.getAdjustedAngle(),
-                                new SwerveModulePosition[] {
-                                                m_frontLeft.getModulePosition(),
-                                                m_frontRight.getModulePosition(),
-                                                m_backLeft.getModulePosition(),
-                                                m_backRight.getModulePosition()
-                                },
-                                ShuffleboardUI.Autonomous.getStartingLocation().getPose());
-                poseFilter.setCertainty(true); // we just set a known position
+                m_left.resetDriveMotorPosition();
+                m_right.resetDriveMotorPosition();
         }
 
         /**
          * Resets the pose to FrontSpeakerClose (shooter facing towards speaker)
          */
         public void resetDriverPose() {
-                m_frontLeft.resetDriveMotorPosition();
-                m_frontRight.resetDriveMotorPosition();
-                m_backLeft.resetDriveMotorPosition();
-                m_backRight.resetDriveMotorPosition();
-                poseFilter.resetPosition(
-                                _nav.getAdjustedAngle(),
-                                new SwerveModulePosition[] {
-                                                m_frontLeft.getModulePosition(),
-                                                m_frontRight.getModulePosition(),
-                                                m_backLeft.getModulePosition(),
-                                                m_backRight.getModulePosition()
-                                },
-                                Constants.FieldStartingLocation.FrontSpeakerClose.getPose());
-                poseFilter.setCertainty(true); // we just set a known position
+                m_left.resetDriveMotorPosition();
+                m_right.resetDriveMotorPosition();
         }
 
         /**
@@ -126,9 +87,8 @@ public class Drivetrain extends KillableSubsystem {
          */
         public ChassisSpeeds getChassisSpeeds() {
                 return m_kinematics.toChassisSpeeds(
-                                m_frontLeft.getModuleState(),
-                                m_frontRight.getModuleState(),
-                                m_backLeft.getModuleState(),
-                                m_backRight.getModuleState());
+                                new DifferentialDriveWheelSpeeds(
+                                                m_left.getModuleState(),
+                                                m_right.getModuleState()));
         }
 }

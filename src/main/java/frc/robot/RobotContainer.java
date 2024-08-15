@@ -1,4 +1,5 @@
 package frc.robot;
+
 // WPILib imports
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -22,7 +23,7 @@ import frc.robot.subsystems.*;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  
+
   // The robot's subsystems and commands are defined here
   private final Drivetrain _drivetrain;
 
@@ -36,10 +37,8 @@ public class RobotContainer {
 
     // Sets up Control scheme chooser
     ShuffleboardUI.Overview.addControls(
-      new JoystickXbox(2, 0),
-      new DoubleXbox(0, 1),
-      new DoubleXboxSpin(0, 1)
-    );
+        new JoystickXbox(2, 0),
+        new DoubleXboxSpin(0, 1));
 
     // Bindings and Teleop
     configureButtonBindings();
@@ -62,7 +61,8 @@ public class RobotContainer {
     // Command to kill robot
     new Trigger(() -> ShuffleboardUI.Overview.getControl().getKillAuto()).whileTrue(new KillSpecified(_drivetrain));
     // Reset pose trigger
-    new Trigger(() -> ShuffleboardUI.Overview.getControl().getPoseReset()).onTrue(new InstantCommand(_drivetrain::resetDriverPose));
+    new Trigger(() -> ShuffleboardUI.Overview.getControl().getPoseReset())
+        .onTrue(new InstantCommand(_drivetrain::resetDriverPose));
   }
 
   /**

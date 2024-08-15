@@ -1,4 +1,5 @@
 package frc.robot.control;
+
 import edu.wpi.first.math.Pair;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -15,11 +16,11 @@ public class DoubleXboxSpin extends AbstractControl {
 
     public DoubleXboxSpin(int driveboxID, int notesboxID) {
         // Sets up xbox controllers
-		drivebox = new XboxController(driveboxID);
-		notesbox = new XboxController(notesboxID);
+        drivebox = new XboxController(driveboxID);
+        notesbox = new XboxController(notesboxID);
         // Sets triggers that map to speeds
         setSpeedTriggers();
-	}
+    }
 
     @Override
     public DriveCommandData getDriveCommandData() {
@@ -35,29 +36,36 @@ public class DoubleXboxSpin extends AbstractControl {
     }
 
     public void setSpeedTriggers() {
-        new Trigger(drivebox::getAButton).onTrue(new InstantCommand(()->speed_level = 0.1 * Constants.Swerve.robotMaxSpeed));
-        new Trigger(drivebox::getBButton).onTrue(new InstantCommand(()->speed_level = 0.2 * Constants.Swerve.robotMaxSpeed));
-        new Trigger(drivebox::getXButton).onTrue(new InstantCommand(()->speed_level = 0.35 * Constants.Swerve.robotMaxSpeed));
-        new Trigger(drivebox::getYButton).onTrue(new InstantCommand(()->speed_level = 0.6 * Constants.Swerve.robotMaxSpeed));
+        new Trigger(drivebox::getAButton)
+                .onTrue(new InstantCommand(() -> speed_level = 0.1 * Constants.Differential.robotMaxSpeed));
+        new Trigger(drivebox::getBButton)
+                .onTrue(new InstantCommand(() -> speed_level = 0.2 * Constants.Differential.robotMaxSpeed));
+        new Trigger(drivebox::getXButton)
+                .onTrue(new InstantCommand(() -> speed_level = 0.35 * Constants.Differential.robotMaxSpeed));
+        new Trigger(drivebox::getYButton)
+                .onTrue(new InstantCommand(() -> speed_level = 0.6 * Constants.Differential.robotMaxSpeed));
     }
-    
-    public Pair<Double,Double> getXY() {
-        double X = SimpleMath.ApplyThresholdAndSensitivity(drivebox.getRawAxis(0), Constants.Control.XBOX_X_THRESHOLD, Constants.Control.XBOX_DIRECTIONAL_SENSITIVITY);
-        double Y = SimpleMath.ApplyThresholdAndSensitivity(drivebox.getRawAxis(1), Constants.Control.XBOX_X_THRESHOLD, Constants.Control.XBOX_DIRECTIONAL_SENSITIVITY);
-        return super.OrientXY(new Pair<Double,Double>(X, Y));
+
+    public Pair<Double, Double> getXY() {
+        double X = SimpleMath.ApplyThresholdAndSensitivity(drivebox.getRawAxis(0), Constants.Control.XBOX_X_THRESHOLD,
+                Constants.Control.XBOX_DIRECTIONAL_SENSITIVITY);
+        double Y = SimpleMath.ApplyThresholdAndSensitivity(drivebox.getRawAxis(1), Constants.Control.XBOX_X_THRESHOLD,
+                Constants.Control.XBOX_DIRECTIONAL_SENSITIVITY);
+        return super.OrientXY(new Pair<Double, Double>(X, Y));
     }
 
     public Double getSpin() {
-        return SimpleMath.ApplyThresholdAndSensitivity(-drivebox.getRawAxis(4), Constants.Control.XBOX_SPIN_ROT_THRESHOLD, Constants.Control.XBOX_SPIN_ROT_SENSITIVITY);
+        return SimpleMath.ApplyThresholdAndSensitivity(-drivebox.getRawAxis(4),
+                Constants.Control.XBOX_SPIN_ROT_THRESHOLD, Constants.Control.XBOX_SPIN_ROT_SENSITIVITY);
     }
 
     public Double getDirectionalSpeedLevel() {
-		return speed_level;
-	}
+        return speed_level;
+    }
 
-	public Double getSpinSpeedLevel() {
-		return 0.5 * speed_level;
-	}
+    public Double getSpinSpeedLevel() {
+        return 0.5 * speed_level;
+    }
 
     @Override
     public Boolean getPoseReset() {
@@ -71,43 +79,43 @@ public class DoubleXboxSpin extends AbstractControl {
 
     @Override
     public Boolean getAcquire() {
-		return notesbox.getLeftTriggerAxis() > 0.3;
-	}
+        return notesbox.getLeftTriggerAxis() > 0.3;
+    }
 
-	@Override
-	public Boolean getReverse() {
-		return notesbox.getLeftBumper();
-	}
+    @Override
+    public Boolean getReverse() {
+        return notesbox.getLeftBumper();
+    }
 
-	@Override
-	public Boolean getShootSpeaker() {
-		return notesbox.getRightTriggerAxis() > 0.3;
-	}
+    @Override
+    public Boolean getShootSpeaker() {
+        return notesbox.getRightTriggerAxis() > 0.3;
+    }
 
-	@Override
-	public Boolean getShootAmp() {
-		return notesbox.getRightBumper();
-	}
+    @Override
+    public Boolean getShootAmp() {
+        return notesbox.getRightBumper();
+    }
 
     @Override
     public Boolean getManualShootSpeaker() {
-		return notesbox.getAButton();
-	}
+        return notesbox.getAButton();
+    }
 
     @Override
-	public Boolean getManualShootAmp() {
-		return notesbox.getBButton();
-	}
+    public Boolean getManualShootAmp() {
+        return notesbox.getBButton();
+    }
 
     @Override
-	public Boolean getManualAcquisition() {
-		return notesbox.getXButton();
-	}
+    public Boolean getManualAcquisition() {
+        return notesbox.getXButton();
+    }
 
     @Override
-	public Boolean getManualCrashbar() {
-		return notesbox.getYButton();
-	}
+    public Boolean getManualCrashbar() {
+        return notesbox.getYButton();
+    }
 
     @Override
     public Boolean getManualClimbers() {
