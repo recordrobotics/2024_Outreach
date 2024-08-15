@@ -110,6 +110,6 @@ public class DifferentialModule {
   // SHUFFLEBOARD STUFF
 
   private void setupShuffleboard(double driveMotorChannel) {
-    ShuffleboardUI.Test.addMotor("Drive " + driveMotorChannel, m_driveMotor);
+    ShuffleboardUI.Test.addSlider("Drive " + driveMotorChannel, m_driveMotor.get(), -1, 1).subscribe(m_driveMotor::set);
   }
 }

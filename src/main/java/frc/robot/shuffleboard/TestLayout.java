@@ -10,6 +10,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.motorcontrol.MotorController;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
@@ -38,7 +39,7 @@ public class TestLayout extends AbstractLayout {
     private final Map<GenericEntry, PeriodicNotifier<Double>> sliderMap = new HashMap<>();
     private final Map<GenericEntry, PeriodicNotifier<Rotation2d>> headingMap = new HashMap<>();
 
-    public <T extends MotorController> void addMotor(String name, T motor) {
+    public <T extends MotorController & Sendable> void addMotor(String name, T motor) {
         getTab()
             .add(name, motor)
             .withWidget(BuiltInWidgets.kMotorController);

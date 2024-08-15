@@ -7,8 +7,7 @@ import frc.robot.shuffleboard.ShuffleboardUI;
 import com.revrobotics.CANSparkLowLevel.MotorType;
 
 public class Shooter extends KillableSubsystem {
-
-    private CANSparkMax flywheel = new CANSparkMax(RobotMap.Shooter.FLYWHEEL_MOTOR_DEVICE_ID, MotorType.kBrushless);
+    private CANSparkMax flywheel = new CANSparkMax(RobotMap.Shooter.FLYWHEEL_MOTOR_DEVICE_ID, MotorType.kBrushed);
 
     public Shooter() {
         toggle(ShooterStates.OFF);

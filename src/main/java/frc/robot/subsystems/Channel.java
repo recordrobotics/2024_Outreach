@@ -1,15 +1,18 @@
 package frc.robot.subsystems;
-import edu.wpi.first.wpilibj.motorcontrol.Spark;
+
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkLowLevel.MotorType;
+
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.shuffleboard.ShuffleboardUI;
 
 public class Channel extends KillableSubsystem {
-    private Spark channelMotor = new Spark(RobotMap.Channel.CHANNEL_MOTOR_ID);
+    private CANSparkMax channelMotor = new CANSparkMax(RobotMap.Channel.CHANNEL_MOTOR_ID, MotorType.kBrushed);
 
     public Channel() {
         toggle(ChannelStates.OFF);
-        ShuffleboardUI.Test.addMotor("Channel", channelMotor);
+        ShuffleboardUI.Test.addSlider("Channel", channelMotor.get(), -1, 1).subscribe(channelMotor::set);
     }
 
     public enum ChannelStates {
