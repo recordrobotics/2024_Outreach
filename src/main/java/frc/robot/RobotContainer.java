@@ -38,7 +38,7 @@ public class RobotContainer {
     // Sets up Control scheme chooser
     ShuffleboardUI.Overview.addControls(
         new JoystickXbox(2, 0),
-        new DoubleXboxSpin(0, 1));
+        new Xbox(0, 1));
 
     // Bindings and Teleop
     configureButtonBindings();
@@ -46,7 +46,7 @@ public class RobotContainer {
 
   public void teleopInit() {
     // Sets default command for manual swerve. It is the only one right now
-    _drivetrain.setDefaultCommand(new ManualSwerve(_drivetrain));
+    _drivetrain.setDefaultCommand(new ManualDrive(_drivetrain));
   }
 
   /**

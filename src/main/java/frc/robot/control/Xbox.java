@@ -8,16 +8,14 @@ import frc.robot.Constants;
 import frc.robot.utils.DriveCommandData;
 import frc.robot.utils.SimpleMath;
 
-public class DoubleXboxSpin extends AbstractControl {
+public class Xbox extends AbstractControl {
 
     private XboxController drivebox;
-    private XboxController notesbox;
     private double speed_level = 0.1;
 
-    public DoubleXboxSpin(int driveboxID, int notesboxID) {
+    public Xbox(int driveboxID, int notesboxID) {
         // Sets up xbox controllers
         drivebox = new XboxController(driveboxID);
-        notesbox = new XboxController(notesboxID);
         // Sets triggers that map to speeds
         setSpeedTriggers();
     }
@@ -74,66 +72,6 @@ public class DoubleXboxSpin extends AbstractControl {
 
     @Override
     public Boolean getKillAuto() {
-        return drivebox.getRawButton(8) || notesbox.getRawButton(8);
-    }
-
-    @Override
-    public Boolean getAcquire() {
-        return notesbox.getLeftTriggerAxis() > 0.3;
-    }
-
-    @Override
-    public Boolean getReverse() {
-        return notesbox.getLeftBumper();
-    }
-
-    @Override
-    public Boolean getShootSpeaker() {
-        return notesbox.getRightTriggerAxis() > 0.3;
-    }
-
-    @Override
-    public Boolean getShootAmp() {
-        return notesbox.getRightBumper();
-    }
-
-    @Override
-    public Boolean getManualShootSpeaker() {
-        return notesbox.getAButton();
-    }
-
-    @Override
-    public Boolean getManualShootAmp() {
-        return notesbox.getBButton();
-    }
-
-    @Override
-    public Boolean getManualAcquisition() {
-        return notesbox.getXButton();
-    }
-
-    @Override
-    public Boolean getManualCrashbar() {
-        return notesbox.getYButton();
-    }
-
-    @Override
-    public Boolean getManualClimbers() {
-        return notesbox.getRawButton(7);
-    }
-
-    @Override
-    public Boolean getTeleAmp() {
-        return false;
-    }
-
-    @Override
-    public Boolean getTeleSpeaker() {
-        return false;
-    }
-
-    @Override
-    public Boolean getTeleChain() {
-        return false;
+        return drivebox.getRawButton(8);
     }
 }

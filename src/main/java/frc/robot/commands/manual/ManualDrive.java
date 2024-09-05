@@ -10,7 +10,7 @@ import frc.robot.utils.DriveCommandData;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** An example command that uses an example subsystem. */
-public class ManualSwerve extends Command {
+public class ManualDrive extends Command {
 
   @SuppressWarnings({ "PMD.UnusedPrivateField", "PMD.SingularField" })
 
@@ -21,7 +21,7 @@ public class ManualSwerve extends Command {
   /**
    * @param drivetrain
    */
-  public ManualSwerve(Drivetrain drivetrain) {
+  public ManualDrive(Drivetrain drivetrain) {
     // Init variables
     _drivetrain = drivetrain;
     addRequirements(drivetrain);
