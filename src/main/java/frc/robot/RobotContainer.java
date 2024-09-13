@@ -34,8 +34,6 @@ public class RobotContainer {
 
     // Init subsystems
     _drivetrain = new Drivetrain();
-    _channel = new Channel();
-    _shooter = new Shooter();
 
     // Sets up Control scheme chooser
     ShuffleboardUI.Overview.addControls(
@@ -48,8 +46,6 @@ public class RobotContainer {
   public void teleopInit() {
     // Sets default command for manual swerve. It is the only one right now
     _drivetrain.setDefaultCommand(new ManualDrive(_drivetrain));
-    _channel.setDefaultCommand(new ManualChannel(_channel));
-    _shooter.setDefaultCommand(new ManualDrive(_shooter));
   }
 
   /**

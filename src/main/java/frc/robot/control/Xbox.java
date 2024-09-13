@@ -7,8 +7,6 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants;
 import frc.robot.utils.DriveCommandData;
 import frc.robot.utils.SimpleMath;
-import frc.robot.subsystems.Channel;
-import frc.robot.subsystems.Shooter;
 
 public class Xbox extends AbstractControl {
 
@@ -61,16 +59,6 @@ public class Xbox extends AbstractControl {
 
     public Double getDirectionalSpeedLevel() {
         return speed_level;
-    }
-
-    public ChannelStates getChannel() {
-        if(drivebox.getLeftTriggerAxis() < 0.5) return ChannelStates.SHOOT;
-        else return ChannelStates.OFF;
-    }
-
-    public ShooterStates getShooter() {
-        if(drivebox.getRightTriggerAxis() < 0.5) return ShooterStates.SPEAKER;
-        else return ShooterStates.OFF;
     }
 
     public Double getSpinSpeedLevel() {
