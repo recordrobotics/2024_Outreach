@@ -23,6 +23,8 @@ public class ModuleConstants {
     public int driveMotorChannel;
     public int driveMotorFollowerChannel;
 
+    public boolean inverted;
+
     public double DRIVE_GEAR_RATIO;
 
     public double DRIVE_KP;
@@ -61,11 +63,13 @@ public class ModuleConstants {
     public ModuleConstants(
             int driveMotorChannel,
             int driveMotorFollowerChannel,
+            boolean inverted,
             MotorType driveMotorType) {
 
         // Encoder nums
         this.driveMotorChannel = driveMotorChannel;
         this.driveMotorFollowerChannel = driveMotorFollowerChannel;
+        this.inverted = inverted;
 
         // Max Angular Acceleration & Velocity
         this.DriveMaxAngularVelocity = Constants.Differential.DriveMaxAngularVelocity;
@@ -172,7 +176,9 @@ public class ModuleConstants {
         if (driveMotorFollowerChannel == null)
             return getDefault(location);
 
-        return new ModuleConstants(Math.toIntExact(driveMotorChannel), Math.toIntExact(driveMotorFollowerChannel), driveMotorType);
+        Boolean inverted = (Boolean)motor.get("inverted");
+
+        return new ModuleConstants(Math.toIntExact(driveMotorChannel), Math.toIntExact(driveMotorFollowerChannel), inverted, driveMotorType);
     }
 
 }

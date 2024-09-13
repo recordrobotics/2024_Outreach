@@ -29,9 +29,9 @@ public final class Constants {
     }
 
     public final class Channel {
-        public static final double SHOOT_SPEED = 1;
-        public static final double THROUGH_SPEED = 1;
-        public static final double REVERSE_SPEED = -1;
+        public static final double SHOOT_SPEED = -1;
+        public static final double THROUGH_SPEED = -1;
+        public static final double REVERSE_SPEED = 1;
     }
     
     public final class Control {
@@ -74,8 +74,8 @@ public final class Constants {
          * between front and back).
          * Used for calculating wheel locations on the robot
          */
-        public static final double ROBOT_WHEEL_DISTANCE_WIDTH = 0.46;
-        public static final double ROBOT_WHEEL_DISTANCE_LENGTH = 0.46;
+        public static final double ROBOT_WHEEL_DISTANCE_WIDTH = 0.56515;
+        public static final double ROBOT_WHEEL_DISTANCE_LENGTH = 0.56515;
     }
 
     public final class Differential {
@@ -90,7 +90,7 @@ public final class Constants {
         public static final double FALCON_DRIVE_GEAR_RATIO = 7.36; // (https://web.archive.org/web/20230117081053/https://docs.wcproducts.com/wcp-swervex/general-info/ratio-options)
 
         public static final double KRAKEN_TURN_GEAR_RATIO = 13.3714;
-        public static final double KRAKEN_DRIVE_GEAR_RATIO = 6.75; // X1 12 pinion
+        public static final double KRAKEN_DRIVE_GEAR_RATIO = 9.13; // X1 12 pinion
 
         // PID Values
         public static final double FALCON_TURN_KP = 1;
@@ -108,7 +108,7 @@ public final class Constants {
         public static final double KRAKEN_TURN_KI = 0;
         public static final double KRAKEN_TURN_KD = 0;
 
-        public static final double KRAKEN_DRIVE_KP = 0.2681;
+        public static final double KRAKEN_DRIVE_KP = 0.8681;
         public static final double KRAKEN_DRIVE_KI = 0;
         public static final double KRAKEN_DRIVE_KD = 0;
 
@@ -119,7 +119,7 @@ public final class Constants {
         public static final double RELATIVE_ENCODER_RATIO = 2048;
 
         // Wheel diameter
-        public static final double WHEEL_DIAMETER = Units.inchesToMeters(4);
+        public static final double WHEEL_DIAMETER = Units.inchesToMeters(6);
 
         // Turn & Drive max velocity and acceleration
         public static final double TurnMaxAngularVelocity = 25; // Drivetrain.kMaxAngularSpeed;
@@ -145,10 +145,12 @@ public final class Constants {
         public static final ModuleConstants BACKUP_leftConstants = new ModuleConstants(
                 2,
                 1,
+                false,
                 MotorType.Kraken);
         public static final ModuleConstants BACKUP_rightConstants = new ModuleConstants(
                 4,
                 3,
+                true,
                 MotorType.Kraken);
 
         // #endregion

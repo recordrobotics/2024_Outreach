@@ -41,7 +41,6 @@ public class Drivetrain extends KillableSubsystem {
 
                 // Calculates wheelSpeeds given optimal ChassisSpeeds given by control
                 // scheme
-
                 DifferentialDriveWheelSpeeds wheelSpeeds = m_kinematics.toWheelSpeeds(
                                 fieldRelative
                                                 ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot,

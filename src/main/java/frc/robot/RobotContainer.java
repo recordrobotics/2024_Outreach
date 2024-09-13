@@ -26,6 +26,8 @@ public class RobotContainer {
 
   // The robot's subsystems and commands are defined here
   private final Drivetrain _drivetrain;
+  private final Channel _channel;
+  private final Shooter _shooter;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -34,6 +36,9 @@ public class RobotContainer {
 
     // Init subsystems
     _drivetrain = new Drivetrain();
+    _channel = new Channel();
+    _shooter = new Shooter();
+    
 
     // Sets up Control scheme chooser
     ShuffleboardUI.Overview.addControls(
@@ -58,10 +63,13 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     // Command to kill robot
-    new Trigger(() -> ShuffleboardUI.Overview.getControl().getKillAuto()).whileTrue(new KillSpecified(_drivetrain));
+    new Trigger(() -> ShuffleboardUI.Overview.getControl().getKillAuto()).whileTrue(new KillSpecified(_drivetrain, _channel, _shooter));
     // Reset pose trigger
     new Trigger(() -> ShuffleboardUI.Overview.getControl().getPoseReset())
         .onTrue(new InstantCommand(_drivetrain::resetDriverPose));
+
+        new Trigger(() -> ShuffleboardUI.Overview.getControl().getReverse()).toggleOnTrue(new Reverse(_shooter, _channel));
+    new Trigger(() -> ShuffleboardUI.Overview.getControl().getShoot()).toggleOnTrue(new Shoot(_channel, _shooter));
   }
 
   /**

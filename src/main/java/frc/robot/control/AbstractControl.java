@@ -13,6 +13,9 @@ public abstract class AbstractControl {
     public abstract Boolean getPoseReset();
 
     public abstract Boolean getKillAuto();
+
+    public abstract Boolean getShoot();
+    public abstract Boolean getReverse();
     
     // Orient XY
     public static Pair<Double, Double> OrientXY(Pair<Double, Double> input) {

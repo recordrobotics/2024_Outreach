@@ -1,13 +1,12 @@
 package frc.robot.subsystems;
-import com.revrobotics.CANSparkMax;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.shuffleboard.ShuffleboardUI;
 
-import com.revrobotics.CANSparkLowLevel.MotorType;
+import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 public class Shooter extends KillableSubsystem {
-    private CANSparkMax flywheel = new CANSparkMax(RobotMap.Shooter.FLYWHEEL_MOTOR_DEVICE_ID, MotorType.kBrushed);
+    private Spark flywheel = new Spark(RobotMap.Shooter.FLYWHEEL_MOTOR_DEVICE_ID);
 
     public Shooter() {
         toggle(ShooterStates.OFF);

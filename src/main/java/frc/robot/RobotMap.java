@@ -6,6 +6,6 @@ public final class RobotMap {
     }
 
     public static final class Shooter {
-        public static final int FLYWHEEL_MOTOR_DEVICE_ID = 9;
+        public static final int FLYWHEEL_MOTOR_DEVICE_ID = 1;
     }
 }

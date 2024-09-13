@@ -7,10 +7,13 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.shuffleboard.ShuffleboardUI;
 import frc.robot.utils.ModuleConstants;
 
 public class DifferentialModule {
+
+  private static double[] graph = new double[4];
 
   // Creates variables for motors and absolute encoders
   private final CANSparkMax m_driveMotor;
@@ -35,6 +38,7 @@ public class DifferentialModule {
     m_driveMotor = new CANSparkMax (m.driveMotorChannel, MotorType.kBrushless);
     m_driveMotorFollower = new CANSparkMax (m.driveMotorFollowerChannel, MotorType.kBrushless);
     m_driveMotorFollower.follow(m_driveMotor);
+    m_driveMotor.setInverted(m.inverted);
 
     // Creates other variables
     this.DRIVE_GEAR_RATIO = m.DRIVE_GEAR_RATIO;
@@ -72,6 +76,7 @@ public class DifferentialModule {
     double driveMotorRotationsPerSecond = m_driveMotor.getEncoder().getVelocity() / 60.0; // RPM to RPS
     double driveWheelMetersPerSecond = (driveMotorRotationsPerSecond / DRIVE_GEAR_RATIO)
         * (WHEEL_DIAMETER * Math.PI);
+    graph[m_driveMotor.getDeviceId() == 2 ? 1 : 3] = driveWheelMetersPerSecond;
     return driveWheelMetersPerSecond;
   }
 
@@ -101,6 +106,10 @@ public class DifferentialModule {
         speedMetersPerSecond);
     double driveFeedforwardOutput = driveFeedForward.calculate(speedMetersPerSecond);
     m_driveMotor.setVoltage(driveOutput + driveFeedforwardOutput);
+
+    graph[m_driveMotor.getDeviceId() == 2 ? 0 : 2] = speedMetersPerSecond;
+
+    SmartDashboard.putNumberArray("drive", graph);
   }
 
   public void stop() {

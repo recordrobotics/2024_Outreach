@@ -1,10 +1,12 @@
 {
     "left": {
         "driveMotorChannel": 2,
-        "driveMotorFollowerChannel": 1
+        "driveMotorFollowerChannel": 1,
+        "inverted": false
     },
     "right": {
         "driveMotorChannel": 4,
-        "driveMotorFollowerChannel": 3
+        "driveMotorFollowerChannel": 3,
+        "inverted": true
     }
 }
