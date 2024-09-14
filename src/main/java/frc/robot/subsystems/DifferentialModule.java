@@ -66,18 +66,23 @@ public class DifferentialModule {
   }
 
   /**
-   * TODO: figure out how this calculation works and make it more clear instead of
-   * having it all happen on one line
-   * *custom function
-   * 
    * @return The current velocity of the drive motor (meters per second)
    */
   private double getDriveWheelVelocity() {
-    double driveMotorRotationsPerSecond = m_driveMotor.getEncoder().getVelocity() / 60.0; // RPM to RPS
-    double driveWheelMetersPerSecond = (driveMotorRotationsPerSecond / DRIVE_GEAR_RATIO)
-        * (WHEEL_DIAMETER * Math.PI);
-    graph[m_driveMotor.getDeviceId() == 2 ? 1 : 3] = driveWheelMetersPerSecond;
-    return driveWheelMetersPerSecond;
+    // Convert motor velocity from RPM to rotations per second (RPS)
+    double motorRPM = m_driveMotor.getEncoder().getVelocity();// Use motor encoder to get RPM
+    double motorRPS = motorRPM / 60.0;// divide by 60 seconds per minute to get RPS
+    
+    // Convert motor rotations per second to wheel meters per second
+    double wheelCircumference = WHEEL_DIAMETER * Math.PI;
+    double wheelRPS = motorRPS / DRIVE_GEAR_RATIO;// compensate for the drive gear ratio
+    double wheelMetersPerSecond = wheelRPS * wheelCircumference;
+    
+    // Update graph with the current wheel velocity
+    int graphIndex = (m_driveMotor.getDeviceId() == 2) ? 1 : 3;
+    graph[graphIndex] = wheelMetersPerSecond;
+    
+    return wheelMetersPerSecond;
   }
 
   /**

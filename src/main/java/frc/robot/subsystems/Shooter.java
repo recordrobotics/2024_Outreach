@@ -6,7 +6,7 @@ import frc.robot.shuffleboard.ShuffleboardUI;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 
 public class Shooter extends KillableSubsystem {
-    private Spark flywheel = new Spark(RobotMap.Shooter.FLYWHEEL_MOTOR_DEVICE_ID);
+    private Spark flywheel = new Spark(RobotMap.Shooter.FLYWHEEL_MOTOR_DEVICE_ID);// old PWM Spark (confusing)
 
     public Shooter() {
         toggle(ShooterStates.OFF);

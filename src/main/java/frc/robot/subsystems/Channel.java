@@ -6,7 +6,7 @@ import frc.robot.RobotMap;
 import frc.robot.shuffleboard.ShuffleboardUI;
 
 public class Channel extends KillableSubsystem {
-    private Spark channelMotor = new Spark(RobotMap.Channel.CHANNEL_MOTOR_ID);
+    private Spark channelMotor = new Spark(RobotMap.Channel.CHANNEL_MOTOR_ID);// old PWM Spark (confusing)
 
     public Channel() {
         toggle(ChannelStates.OFF);
