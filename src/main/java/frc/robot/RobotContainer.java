@@ -70,6 +70,8 @@ public class RobotContainer {
 
         new Trigger(() -> ShuffleboardUI.Overview.getControl().getReverse()).toggleOnTrue(new Reverse(_shooter, _channel));
     new Trigger(() -> ShuffleboardUI.Overview.getControl().getShoot()).toggleOnTrue(new Shoot(_channel, _shooter));
+        new Trigger(() -> ShuffleboardUI.Overview.getControl().getLoad()).toggleOnTrue(new ChannelLoad(_channel));
+
   }
 
   /**
