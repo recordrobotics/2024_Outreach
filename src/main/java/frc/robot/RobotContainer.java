@@ -29,7 +29,7 @@ public class RobotContainer {
   private final Channel _channel;
   private final Shooter _shooter;
 
-  /**
+  /** 
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
