@@ -1,42 +1,36 @@
 package frc.robot.commands.manual;
 
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.robot.commands.KillSpecified;
 import frc.robot.subsystems.Channel;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Channel.ChannelStates;
-import frc.robot.subsystems.Shooter.ShooterStates;
 
-public class ChannelLoad extends Command {
+public class ChannelLoad extends SequentialCommandGroup {
 
   private static Shooter _acquisition;
   private static Channel _channel;
 
-  public ChannelLoad (Channel channel) {
+  private final double loadTime = .25;
+
+
+  public ChannelLoad (Channel channel, Shooter acquisition) {
+    _acquisition = acquisition;
     _channel = channel;
+    addRequirements(acquisition);
     addRequirements(channel);
+
+        final Runnable killSpecified = () -> new KillSpecified(_channel, _acquisition);
+
+        addCommands(
+
+        new InstantCommand(()->_channel.toggle(ChannelStates.LOAD), _channel).handleInterrupt(killSpecified),
+        new WaitCommand(loadTime),
+        new InstantCommand(()-> _channel.toggle(ChannelStates.OFF), _channel).handleInterrupt(killSpecified)
+    );
   }
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    _channel.toggle(ChannelStates.SHOOT);
-  }
 
-  // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    _acquisition.toggle(ShooterStates.OFF);
-    _channel.toggle(ChannelStates.OFF);
-  }
-
-  // Returns true when the command should end.
-  @Override
-  public boolean isFinished() {
-    return false;
-  }
 }

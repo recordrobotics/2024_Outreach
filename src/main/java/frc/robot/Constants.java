@@ -23,15 +23,16 @@ import edu.wpi.first.math.util.Units;
  */
 public final class Constants {
     public final class Shooter {
-        public static final double SPEAKER_SPEED = 1;
+        public static final double SPEAKER_SPEED = .7;
         public static final double AMP_SPEED = 0.25;
-        public static final double REVERSE_SPEED = -0.1;
+        public static final double REVERSE_SPEED = -0.5;
     }
 
     public final class Channel {
-        public static final double SHOOT_SPEED = -1;
+        public static final double LOAD_SPEED = -.4;
+        public static final double SHOOT_SPEED = -.55;
         public static final double THROUGH_SPEED = -1;
-        public static final double REVERSE_SPEED = 1;
+        public static final double REVERSE_SPEED = .6;
     }
     
     public final class Control {
