@@ -1,10 +1,9 @@
 package frc.robot.commands.manual;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Channel;
-import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Channel.ChannelStates;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Shooter.ShooterStates;
 
 public class Reverse extends Command {
@@ -12,7 +11,7 @@ public class Reverse extends Command {
   private static Shooter _acquisition;
   private static Channel _channel;
 
-  public Reverse (Shooter acquisition, Channel channel) {
+  public Reverse(Shooter acquisition, Channel channel) {
     _acquisition = acquisition;
     _channel = channel;
     addRequirements(acquisition);
@@ -28,8 +27,7 @@ public class Reverse extends Command {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override

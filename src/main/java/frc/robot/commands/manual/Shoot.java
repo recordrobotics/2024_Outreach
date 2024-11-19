@@ -15,16 +15,18 @@ public class Shoot extends SequentialCommandGroup {
   private static Shooter _shooter;
 
   /** Number of seconds it takes for the flywheel to spin up */
-  private final double flywheelSpinupTime = 0.3; //1.5;
+  private final double flywheelSpinupTime = 0.3; // 1.5;
+
   /** Number of seconds it takes to shoot once the flywheel h as been spun up */
   private final double shootTime = 2;
 
   /**
-   * Command that shoots the note into the speaker. Manages all relevant subsystems to do so. 
+   * Command that shoots the note into the speaker. Manages all relevant subsystems to do so.
+   *
    * @param channel
    * @param shooter
    */
-  public Shoot (Channel channel, Shooter shooter) {
+  public Shoot(Channel channel, Shooter shooter) {
     _channel = channel;
     _shooter = shooter;
     addRequirements(channel);
@@ -33,12 +35,15 @@ public class Shoot extends SequentialCommandGroup {
     final Runnable killSpecified = () -> new KillSpecified(_channel, _shooter);
 
     addCommands(
-        new InstantCommand(()->_shooter.toggle(ShooterStates.SPEAKER), _shooter).handleInterrupt(killSpecified),
+        new InstantCommand(() -> _shooter.toggle(ShooterStates.SPEAKER), _shooter)
+            .handleInterrupt(killSpecified),
         new WaitCommand(flywheelSpinupTime),
-        new InstantCommand(()->_channel.toggle(ChannelStates.SHOOT), _channel).handleInterrupt(killSpecified),
+        new InstantCommand(() -> _channel.toggle(ChannelStates.SHOOT), _channel)
+            .handleInterrupt(killSpecified),
         new WaitCommand(shootTime),
-        new InstantCommand(()-> _shooter.toggle(ShooterStates.OFF), _shooter).handleInterrupt(killSpecified),
-        new InstantCommand(()-> _channel.toggle(ChannelStates.OFF), _channel).handleInterrupt(killSpecified)
-    );
+        new InstantCommand(() -> _shooter.toggle(ShooterStates.OFF), _shooter)
+            .handleInterrupt(killSpecified),
+        new InstantCommand(() -> _channel.toggle(ChannelStates.OFF), _channel)
+            .handleInterrupt(killSpecified));
   }
 }
