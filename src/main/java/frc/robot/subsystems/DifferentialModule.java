@@ -1,8 +1,7 @@
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-
+import com.revrobotics.CANSparkMax;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -26,17 +25,15 @@ public class DifferentialModule {
   private final double WHEEL_DIAMETER;
 
   /**
-   * Constructs a SwerveModule with a drive motor, turning motor, and absolute
-   * turning encoder.
-   * 
-   * @param m - a ModuleConstants object that contains all constants relevant for
-   *          creating a swerve module.
-   *          Look at ModuleConstants.java for what variables are contained
+   * Constructs a SwerveModule with a drive motor, turning motor, and absolute turning encoder.
+   *
+   * @param m - a ModuleConstants object that contains all constants relevant for creating a swerve
+   *     module. Look at ModuleConstants.java for what variables are contained
    */
   public DifferentialModule(ModuleConstants m) {
     // Creates TalonFX objects
-    m_driveMotor = new CANSparkMax (m.driveMotorChannel, MotorType.kBrushless);
-    m_driveMotorFollower = new CANSparkMax (m.driveMotorFollowerChannel, MotorType.kBrushless);
+    m_driveMotor = new CANSparkMax(m.driveMotorChannel, MotorType.kBrushless);
+    m_driveMotorFollower = new CANSparkMax(m.driveMotorFollowerChannel, MotorType.kBrushless);
     m_driveMotorFollower.follow(m_driveMotor);
     m_driveMotor.setInverted(m.inverted);
 
@@ -51,15 +48,16 @@ public class DifferentialModule {
     m_driveMotor.set(0);
 
     // Creates PID Controllers
-    this.drivePIDController = new ProfiledPIDController(
-        m.DRIVE_KP,
-        m.DRIVE_KI,
-        m.DRIVE_KD,
-        new TrapezoidProfile.Constraints(m.DriveMaxAngularVelocity, m.DriveMaxAngularAcceleration));
+    this.drivePIDController =
+        new ProfiledPIDController(
+            m.DRIVE_KP,
+            m.DRIVE_KI,
+            m.DRIVE_KD,
+            new TrapezoidProfile.Constraints(
+                m.DriveMaxAngularVelocity, m.DriveMaxAngularAcceleration));
 
-    this.driveFeedForward = new SimpleMotorFeedforward(
-        m.DRIVE_FEEDFORWARD_KS,
-        m.DRIVE_FEEDFORWARD_KV);
+    this.driveFeedForward =
+        new SimpleMotorFeedforward(m.DRIVE_FEEDFORWARD_KS, m.DRIVE_FEEDFORWARD_KV);
 
     // Sets up shuffleboard
     setupShuffleboard(m.driveMotorChannel);
@@ -70,24 +68,24 @@ public class DifferentialModule {
    */
   private double getDriveWheelVelocity() {
     // Convert motor velocity from RPM to rotations per second (RPS)
-    double motorRPM = m_driveMotor.getEncoder().getVelocity();// Use motor encoder to get RPM
-    double motorRPS = motorRPM / 60.0;// divide by 60 seconds per minute to get RPS
-    
+    double motorRPM = m_driveMotor.getEncoder().getVelocity(); // Use motor encoder to get RPM
+    double motorRPS = motorRPM / 60.0; // divide by 60 seconds per minute to get RPS
+
     // Convert motor rotations per second to wheel meters per second
     double wheelCircumference = WHEEL_DIAMETER * Math.PI;
-    double wheelRPS = motorRPS / DRIVE_GEAR_RATIO;// compensate for the drive gear ratio
+    double wheelRPS = motorRPS / DRIVE_GEAR_RATIO; // compensate for the drive gear ratio
     double wheelMetersPerSecond = wheelRPS * wheelCircumference;
-    
+
     // Update graph with the current wheel velocity
     int graphIndex = (m_driveMotor.getDeviceId() == 2) ? 1 : 3;
     graph[graphIndex] = wheelMetersPerSecond;
-    
+
     return wheelMetersPerSecond;
   }
 
   /**
    * *custom function
-   * 
+   *
    * @return The current state of the module.
    */
   public double getModuleState() {
@@ -107,8 +105,8 @@ public class DifferentialModule {
   public void setDesiredState(double speedMetersPerSecond) {
     // Calculate the drive output from the drive PID controller then set drive
     // motor.
-    double driveOutput = drivePIDController.calculate(getDriveWheelVelocity(),
-        speedMetersPerSecond);
+    double driveOutput =
+        drivePIDController.calculate(getDriveWheelVelocity(), speedMetersPerSecond);
     double driveFeedforwardOutput = driveFeedForward.calculate(speedMetersPerSecond);
     m_driveMotor.setVoltage(driveOutput + driveFeedforwardOutput);
 
@@ -124,6 +122,7 @@ public class DifferentialModule {
   // SHUFFLEBOARD STUFF
 
   private void setupShuffleboard(double driveMotorChannel) {
-    ShuffleboardUI.Test.addSlider("Drive " + driveMotorChannel, m_driveMotor.get(), -1, 1).subscribe(m_driveMotor::set);
+    ShuffleboardUI.Test.addSlider("Drive " + driveMotorChannel, m_driveMotor.get(), -1, 1)
+        .subscribe(m_driveMotor::set);
   }
 }
