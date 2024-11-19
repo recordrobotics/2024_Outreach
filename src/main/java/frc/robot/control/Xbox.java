@@ -88,7 +88,7 @@ public class Xbox extends AbstractControl {
   }
 
   public Double getSpinSpeedLevel() {
-    return .7 * speed_level; // 3.14
+    return 3.14 * speed_level;
   }
 
   // @Override
