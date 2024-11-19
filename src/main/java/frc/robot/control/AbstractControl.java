@@ -9,14 +9,11 @@ public abstract class AbstractControl {
   // Movement
   public abstract DriveCommandData getDriveCommandData();
 
-  // Misc
-  public abstract Boolean getPoseReset();
-
-  public abstract Boolean getKillAuto();
-
   public abstract Boolean getShoot();
 
   public abstract Boolean getReverse();
+
+  public abstract Boolean getLoad();
 
   // Orient XY
   public static Pair<Double, Double> OrientXY(Pair<Double, Double> input) {

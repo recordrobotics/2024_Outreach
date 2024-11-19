@@ -19,7 +19,8 @@ public class Channel extends KillableSubsystem {
     THROUGH,
     SHOOT,
     REVERSE,
-    OFF;
+    OFF,
+    LOAD;
   }
 
   public void toggle(double speed) {
@@ -36,6 +37,9 @@ public class Channel extends KillableSubsystem {
         break;
       case REVERSE:
         toggle(Constants.Channel.REVERSE_SPEED);
+        break;
+      case LOAD:
+        toggle(Constants.Channel.LOAD_SPEED);
         break;
       default:
         toggle(0);

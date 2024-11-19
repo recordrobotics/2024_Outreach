@@ -4,10 +4,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 // Local imports
-import frc.robot.commands.KillSpecified;
 import frc.robot.commands.manual.*;
 import frc.robot.control.*;
 import frc.robot.shuffleboard.ShuffleboardUI;
@@ -53,17 +51,12 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // Command to kill robot
-    new Trigger(() -> ShuffleboardUI.Overview.getControl().getKillAuto())
-        .whileTrue(new KillSpecified(_drivetrain, _channel, _shooter));
-    // Reset pose trigger
-    new Trigger(() -> ShuffleboardUI.Overview.getControl().getPoseReset())
-        .onTrue(new InstantCommand(_drivetrain::resetDriverPose));
-
     new Trigger(() -> ShuffleboardUI.Overview.getControl().getReverse())
         .toggleOnTrue(new Reverse(_shooter, _channel));
     new Trigger(() -> ShuffleboardUI.Overview.getControl().getShoot())
         .toggleOnTrue(new Shoot(_channel, _shooter));
+    new Trigger(() -> ShuffleboardUI.Overview.getControl().getLoad())
+        .toggleOnTrue(new ChannelLoad(_channel, _shooter));
   }
 
   /**
