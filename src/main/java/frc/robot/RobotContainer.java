@@ -51,15 +51,6 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    // Command to kill robot
-    //  not nessessory AUTO KILL!!!  // new Trigger(() ->
-    // ShuffleboardUI.Overview.getControl().getKillAuto()).whileTrue(new KillSpecified(_drivetrain,
-    // _channel, _shooter));
-    // Reset pose trigger
-    //  why we keeping posereset  // new Trigger(() ->
-    // ShuffleboardUI.Overview.getControl().getPoseReset())
-    //     .onTrue(new InstantCommand(_drivetrain::resetDriverPose));
-
     new Trigger(() -> ShuffleboardUI.Overview.getControl().getReverse())
         .toggleOnTrue(new Reverse(_shooter, _channel));
     new Trigger(() -> ShuffleboardUI.Overview.getControl().getShoot())

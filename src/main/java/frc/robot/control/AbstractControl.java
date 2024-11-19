@@ -9,11 +9,6 @@ public abstract class AbstractControl {
   // Movement
   public abstract DriveCommandData getDriveCommandData();
 
-  // Misc
-  // public abstract Boolean getPoseReset();
-
-  // public abstract Boolean getKillAuto();
-
   public abstract Boolean getShoot();
 
   public abstract Boolean getReverse();

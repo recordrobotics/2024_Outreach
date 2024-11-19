@@ -91,16 +91,6 @@ public class Xbox extends AbstractControl {
     return 3.14 * speed_level;
   }
 
-  // @Override
-  // public Boolean getPoseReset() {
-  //     return drivebox.getRawButtonPressed(7);
-  // }
-
-  // @Override
-  // public Boolean getKillAuto() {
-  //     return drivebox.getRawButton(8);
-  // }
-
   @Override
   public Boolean getShoot() {
     return drivebox.getRightTriggerAxis() > 0.3 || joystick.getRawButton(1);
