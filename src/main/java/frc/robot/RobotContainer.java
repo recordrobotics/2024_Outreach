@@ -59,15 +59,6 @@ public class RobotContainer {
         .toggleOnTrue(new ChannelLoad(_channel, _shooter));
   }
 
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  public Command getAutonomousCommand() {
-    return null;
-  }
-
   public void testPeriodic() {
     ShuffleboardUI.Test.testPeriodic();
   }
