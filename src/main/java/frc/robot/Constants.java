@@ -85,7 +85,7 @@ public final class Constants {
 
     // Gear ratios for falcon and kraken
     public static final double FALCON_TURN_GEAR_RATIO =
-        15.43; // (https://web.archive.org/web/20230117081053/https://docs.wcproducts.com/wcp-swervex/general-info/ratio-options)
+        15.43; // TODO why is this swerve (https://web.archive.org/web/20230117081053/https://docs.wcproducts.com/wcp-swervex/general-info/ratio-options)
     public static final double FALCON_DRIVE_GEAR_RATIO =
         7.36; // (https://web.archive.org/web/20230117081053/https://docs.wcproducts.com/wcp-swervex/general-info/ratio-options)
 
