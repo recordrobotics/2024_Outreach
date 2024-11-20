@@ -39,7 +39,7 @@ public class RobotContainer {
   }
 
   public void teleopInit() {
-    // Sets default command for manual swerve. It is the only one right now
+    // Sets default command for manual drive. It is the only one right now
     _drivetrain.setDefaultCommand(new ManualDrive(_drivetrain));
   }
 

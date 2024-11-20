@@ -27,7 +27,7 @@ public class DifferentialModule {
   /**
    * Constructs a SwerveModule with a drive motor, turning motor, and absolute turning encoder.
    *
-   * @param m - a ModuleConstants object that contains all constants relevant for creating a swerve
+   * @param m - a ModuleConstants object that contains all constants relevant for creating a differential
    *     module. Look at ModuleConstants.java for what variables are contained
    */
   public DifferentialModule(ModuleConstants m) {
@@ -41,7 +41,7 @@ public class DifferentialModule {
     this.DRIVE_GEAR_RATIO = m.DRIVE_GEAR_RATIO;
     this.WHEEL_DIAMETER = m.WHEEL_DIAMETER;
 
-    // ~2 Seconds delay per swerve module
+    // ~2 Seconds delay per differential module
     Timer.delay(2.3);
 
     // Sets motor speeds to 0

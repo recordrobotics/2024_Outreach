@@ -44,16 +44,12 @@ public class ModuleConstants {
   }
 
   /**
-   * essentially serves as a storage unit for one swerve module, storing every single constant that
+   * essentially serves as a storage unit for one differential module, storing every single constant that
    * a module might want to use
    *
    * @param driveMotorChannel drive motor port
-   * @param turningMotorChannel turn motor port
-   * @param absoluteTurningMotorEncoderChannel abs turn motor encoder port
-   * @param turningEncoderOffset offset of the abs turn encoder at a set starting position (which we
-   *     found through manually testing)
-   * @param wheelLocation Translation2d object of where the wheel is relative to robot frame
-   * @param turnMotorType The type of the turn motor
+   * @param driveMotorFollowerChannel drive motor follower port (just another motor that does the same as the drive motor)
+   * @param inverted whether the drive motors are inverted
    * @param driveMotorType The type of the drive motor
    */
   public ModuleConstants(
@@ -74,7 +70,7 @@ public class ModuleConstants {
     // Shared miscellaneous variables
     this.WHEEL_DIAMETER = Constants.Differential.WHEEL_DIAMETER;
 
-    // Drive Motor Constants
+    // Drive Motor Constants  TODO do we need this bc its kinda swerve
     switch (driveMotorType) {
       case Falcon:
         this.DRIVE_KP = Constants.Differential.FALCON_DRIVE_KP;
@@ -108,7 +104,7 @@ public class ModuleConstants {
   }
 
   /**
-   * Loads module constants from deploy/swerve/motors.json file
+   * Loads module constants from deploy/differential/motors.json file
    *
    * @param location Location of module
    * @param motorType Motor type (determines the falcon/kraken objects in config)
@@ -118,7 +114,7 @@ public class ModuleConstants {
   }
 
   /**
-   * Loads module constants from deploy/swerve/motors.json file
+   * Loads module constants from deploy/differential/motors.json file
    *
    * @param location Location of module
    * @param driveMotorType Drive motor type (also determines the falcon/kraken objects in config)

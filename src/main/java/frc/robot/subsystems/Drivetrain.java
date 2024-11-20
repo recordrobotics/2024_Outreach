@@ -7,7 +7,7 @@ import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import frc.robot.Constants;
 import frc.robot.utils.DriveCommandData;
 
-/** Represents a swerve drive style drivetrain. */
+/** Represents a differential drivetrain. */
 public class Drivetrain extends KillableSubsystem {
 
   // Creates differential kinematics
@@ -77,7 +77,7 @@ public class Drivetrain extends KillableSubsystem {
     m_right.resetDriveMotorPosition();
   }
 
-  /** Returns the current robot relative chassis speeds of the swerve kinematics */
+  /** Returns the current robot relative chassis speeds of the kinematics */
   public ChassisSpeeds getChassisSpeeds() {
     return m_kinematics.toChassisSpeeds(
         new DifferentialDriveWheelSpeeds(m_left.getModuleState(), m_right.getModuleState()));
