@@ -118,4 +118,9 @@ public class DifferentialModule {
     ShuffleboardUI.Test.addSlider("Drive " + driveMotorChannel, m_driveMotor.get(), -1, 1)
         .subscribe(m_driveMotor::set);
   }
+
+  public void close() {
+    m_driveMotor.close();
+    m_driveMotorFollower.close();
+  }
 }

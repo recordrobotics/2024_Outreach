@@ -46,4 +46,9 @@ public class Shooter extends KillableSubsystem {
   public void kill() {
     toggle(ShooterStates.OFF);
   }
+
+  @Override
+  public void close() {
+    flywheel.close();
+  }
 }

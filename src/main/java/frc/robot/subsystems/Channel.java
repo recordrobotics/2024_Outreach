@@ -51,4 +51,9 @@ public class Channel extends KillableSubsystem {
   public void kill() {
     toggle(ChannelStates.OFF);
   }
+
+  @Override
+  public void close() {
+    channelMotor.close();
+  }
 }

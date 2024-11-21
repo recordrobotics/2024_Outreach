@@ -82,4 +82,10 @@ public class Drivetrain extends KillableSubsystem {
     return m_kinematics.toChassisSpeeds(
         new DifferentialDriveWheelSpeeds(m_left.getModuleState(), m_right.getModuleState()));
   }
+
+  @Override
+  public void close() {
+    m_left.close();
+    m_right.close();
+  }
 }
