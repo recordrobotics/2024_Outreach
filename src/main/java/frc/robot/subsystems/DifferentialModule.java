@@ -31,23 +31,19 @@ public class DifferentialModule {
    *     module. Look at ModuleConstants.java for what variables are contained
    */
   public DifferentialModule(ModuleConstants m) {
-    // Creates TalonFX objects
     m_driveMotor = new CANSparkMax(m.driveMotorChannel, MotorType.kBrushless);
     m_driveMotorFollower = new CANSparkMax(m.driveMotorFollowerChannel, MotorType.kBrushless);
     m_driveMotorFollower.follow(m_driveMotor);
     m_driveMotor.setInverted(m.inverted);
 
-    // Creates other variables
     this.DRIVE_GEAR_RATIO = m.DRIVE_GEAR_RATIO;
     this.WHEEL_DIAMETER = m.WHEEL_DIAMETER;
 
     // ~2 Seconds delay per differential module
     Timer.delay(2.3);
 
-    // Sets motor speeds to 0
     m_driveMotor.set(0);
 
-    // Creates PID Controllers
     this.drivePIDController =
         new ProfiledPIDController(
             m.DRIVE_KP,
@@ -59,7 +55,6 @@ public class DifferentialModule {
     this.driveFeedForward =
         new SimpleMotorFeedforward(m.DRIVE_FEEDFORWARD_KS, m.DRIVE_FEEDFORWARD_KV);
 
-    // Sets up shuffleboard
     setupShuffleboard(m.driveMotorChannel);
   }
 
@@ -118,8 +113,6 @@ public class DifferentialModule {
   public void stop() {
     m_driveMotor.setVoltage(0);
   }
-
-  // SHUFFLEBOARD STUFF
 
   private void setupShuffleboard(double driveMotorChannel) {
     ShuffleboardUI.Test.addSlider("Drive " + driveMotorChannel, m_driveMotor.get(), -1, 1)
