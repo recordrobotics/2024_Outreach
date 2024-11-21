@@ -83,7 +83,7 @@ public final class Constants {
     private static final double locY = Frame.ROBOT_WHEEL_DISTANCE_LENGTH / 2;
     public static final double locDist = Math.sqrt(locX * locX + locY * locY);
 
-    // Gear ratios for falcon and kraken
+    // Gear ratios for falcon and kraken WHY IS THIS SWERVE!!!
     public static final double FALCON_TURN_GEAR_RATIO =
         15.43; // TODO why is this swerve (https://web.archive.org/web/20230117081053/https://docs.wcproducts.com/wcp-swervex/general-info/ratio-options)
     public static final double FALCON_DRIVE_GEAR_RATIO =
